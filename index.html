@@ -5,7 +5,7 @@
 </ul>
 </li>
 </ul>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-10-21T07:03:00.000Z" title="2021. 10. 21. 오후 4:03:00">2021-10-21</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-22T00:27:24.000Z" title="2021. 10. 22. 오전 9:27:24">2021-10-22</time></span><span class="level-item"><a class="link-muted" href="/categories/MLP/">MLP</a></span><span class="level-item">11 minutes read (About 1664 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/10/21/MLP/MLP_1/">MLP 모델을 활용하여 MNIST 모델 개발</a></h1><div class="content"><ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-10-21T07:03:00.000Z" title="2021. 10. 21. 오후 4:03:00">2021-10-21</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-22T00:34:36.000Z" title="2021. 10. 22. 오전 9:34:36">2021-10-22</time></span><span class="level-item"><a class="link-muted" href="/categories/MLP/">MLP</a></span><span class="level-item">11 minutes read (About 1665 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/10/21/MLP/MLP_1/">MLP 모델을 활용하여 MNIST 모델 개발</a></h1><div class="content"><ul>
 <li>개발환경<ul>
 <li>Python</li>
 </ul>
@@ -67,7 +67,7 @@ y_train: torch.Size([32]) type: torch.LongTensor
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pltsize = <span class="number">1</span></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span> * pltsize, pltsize))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">  plt.subplot(<span class="number">1</span>, <span class="number">10</span>, i + <span class="number">1</span>)</span><br><span class="line">  plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">  plt.imshow(X_train[i, :, :, :].numpy().reshape(<span class="number">28</span>, <span class="number">28</span>), cmap=<span class="string">&quot;gray_r&quot;</span>)</span><br><span class="line">  plt.title(<span class="string">&#x27;Class: &#x27;</span> + <span class="built_in">str</span>(y_train[i].item()))</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="output_12_0.png" alt="png"></p>
+<p><img src="/images/MLP/output_12_0.png"></p>
 <h3 id="step-5-MLP-모델-설계"><a href="#step-5-MLP-모델-설계" class="headerlink" title="step 5. MLP 모델 설계"></a>step 5. MLP 모델 설계</h3><ul>
 <li>torch 모듈을 이용해 MLP를 설계합니다. </li>
 </ul>
