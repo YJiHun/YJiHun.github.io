@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Tag: Iris - 지훈 블로그</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="지훈 블로그"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="지훈 블로그"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="지훈 블로그"><meta property="og:url" content="https://yjihun.github.io/"><meta property="og:site_name" content="지훈 블로그"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://yjihun.github.io/img/og_image.png"><meta property="article:author" content="John Doe"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://YJiHun.github.io"},"headline":"지훈 블로그","image":["https://yjihun.github.io/img/og_image.png"],"author":{"@type":"Person","name":"John Doe"},"publisher":{"@type":"Organization","name":"지훈 블로그","logo":{"@type":"ImageObject","url":null}},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">지훈 블로그</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">Tags</a></li><li class="is-active"><a href="#" aria-current="page">Iris</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-10-27T08:20:00.000Z" title="2021. 10. 27. 오후 5:20:00">2021-10-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-27T08:23:00.000Z" title="2021. 10. 27. 오후 5:23:00">2021-10-27</time></span><span class="level-item"><a class="link-muted" href="/categories/DeepLearning/">DeepLearning</a></span><span class="level-item">7 minutes read (About 1081 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/10/27/DeepLearning/Iris_dataset/%EA%B3%BC%EC%A0%9C1_Iris_dataset(%EC%A2%85%EB%A5%98%20%EC%98%88%EC%B8%A1)/">Iris_dataset을 이용하여 딥러닝 공부</a></h1><div class="content"><h2 id="1-데이터-정의"><a href="#1-데이터-정의" class="headerlink" title="1. 데이터 정의"></a>1. 데이터 정의</h2><hr>
+<ul>
+<li>sklearn 으로 부터 iris 데이터셋을 불러옵니다.</li>
+<li>x_data와 y_data를 정의합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! ls</span><br></pre></td></tr></table></figure>
+
+<pre><code>iris_test.csv  iris_train.csv  sample_data  sample_submission.csv
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_data = pd.read_csv(<span class="string">&#x27;iris_test.csv&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data = pd.read_csv(<span class="string">&#x27;iris_train.csv&#x27;</span>)</span><br><span class="line">train_data</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>species</th>
+      <th>sepal length (cm)</th>
+      <th>petal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal width (cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>setosa</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>2.9</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>versicolor</td>
+      <td>6.4</td>
+      <td>4.5</td>
+      <td>3.2</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>virginica</td>
+      <td>6.2</td>
+      <td>4.8</td>
+      <td>2.8</td>
+      <td>1.8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>virginica</td>
+      <td>7.2</td>
+      <td>6.1</td>
+      <td>3.6</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>setosa</td>
+      <td>4.9</td>
+      <td>1.4</td>
+      <td>3.0</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>70</td>
+      <td>versicolor</td>
+      <td>6.5</td>
+      <td>4.6</td>
+      <td>2.8</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>71</td>
+      <td>versicolor</td>
+      <td>5.6</td>
+      <td>3.6</td>
+      <td>2.9</td>
+      <td>1.3</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>72</td>
+      <td>versicolor</td>
+      <td>6.2</td>
+      <td>4.5</td>
+      <td>2.2</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>73</td>
+      <td>versicolor</td>
+      <td>4.9</td>
+      <td>3.3</td>
+      <td>2.4</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>74</td>
+      <td>versicolor</td>
+      <td>6.9</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>75 rows × 6 columns</p>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data_np = train_data.to_numpy()</span><br><span class="line"></span><br><span class="line">x_data = data_np[:, <span class="number">2</span>:].astype(<span class="string">&#x27;float&#x27;</span>)</span><br><span class="line">y_data = data_np[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x_data.shape)</span><br><span class="line"><span class="built_in">print</span>(y_data.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>(75, 4)
+(75,)
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_data</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y_data</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br><span class="line">kind = train_data[<span class="string">&#x27;species&#x27;</span>].drop_duplicates().to_numpy() <span class="comment"># 꽃 종류</span></span><br><span class="line">kind</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;], dtype=object)
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 꽃 종류 숫자 변환</span></span><br><span class="line"><span class="keyword">for</span> num, name <span class="keyword">in</span> <span class="built_in">enumerate</span>(kind):</span><br><span class="line">  y_data[y_data == name] = num</span><br><span class="line">  </span><br><span class="line"><span class="built_in">print</span>(y_data, <span class="built_in">type</span>(y_data)) </span><br></pre></td></tr></table></figure>
+
+<pre><code>[0 1 2 2 0 2 0 1 1 1 1 2 1 0 0 2 2 2 0 1 1 0 1 2 2 2 2 2 2 2 1 0 2 2 2 2 2
+ 0 1 1 1 2 1 0 2 1 1 1 1 1 0 1 0 1 0 1 2 0 2 2 2 2 2 2 0 2 1 1 1 2 1 1 1 1
+ 1] &lt;class &#39;numpy.ndarray&#39;&gt;
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br><span class="line">kind_index = <span class="number">0</span></span><br><span class="line"><span class="built_in">print</span>(x_data[y_data == kind_index])</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[4.4 1.4 2.9 0.2]
+ [4.9 1.4 3.  0.2]
+ [4.3 1.1 3.  0.1]
+ [4.6 1.5 3.1 0.2]
+ [5.8 1.2 4.  0.2]
+ [5.1 1.4 3.5 0.2]
+ [5.4 1.7 3.9 0.4]
+ [5.  1.5 3.4 0.2]
+ [4.9 1.5 3.1 0.1]
+ [4.7 1.3 3.2 0.2]
+ [4.6 1.4 3.4 0.3]
+ [5.  1.4 3.6 0.2]
+ [5.4 1.5 3.7 0.2]
+ [4.8 1.4 3.  0.1]
+ [4.8 1.6 3.4 0.2]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br><span class="line">kind_index = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(x_data[y_data == kind_index])</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[6.4 4.5 3.2 1.5]
+ [6.7 5.  3.  1.7]
+ [6.8 4.8 2.8 1.4]
+ [6.6 4.4 3.  1.4]
+ [5.  3.5 2.  1. ]
+ [6.3 4.7 3.3 1.6]
+ [6.7 4.4 3.1 1.4]
+ [5.5 4.  2.3 1.3]
+ [5.2 3.9 2.7 1.4]
+ [6.4 4.3 2.9 1.3]
+ [5.6 3.9 2.5 1.1]
+ [5.8 4.1 2.7 1. ]
+ [5.9 4.2 3.  1.5]
+ [6.  4.5 2.9 1.5]
+ [6.3 4.9 2.5 1.5]
+ [6.1 4.  2.8 1.3]
+ [6.1 4.7 2.8 1.2]
+ [5.7 4.5 2.8 1.3]
+ [6.6 4.6 2.9 1.3]
+ [6.1 4.7 2.9 1.4]
+ [6.  4.  2.2 1. ]
+ [5.9 4.8 3.2 1.8]
+ [7.  4.7 3.2 1.4]
+ [5.6 4.5 3.  1.5]
+ [5.7 3.5 2.6 1. ]
+ [6.5 4.6 2.8 1.5]
+ [5.6 3.6 2.9 1.3]
+ [6.2 4.5 2.2 1.5]
+ [4.9 3.3 2.4 1. ]
+ [6.9 4.9 3.1 1.5]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br><span class="line">kind_index = <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(x_data[y_data == kind_index])</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[6.2 4.8 2.8 1.8]
+ [7.2 6.1 3.6 2.5]
+ [6.5 5.8 3.  2.2]
+ [6.3 4.9 2.7 1.8]
+ [7.6 6.6 3.  2.1]
+ [7.7 6.9 2.6 2.3]
+ [7.1 5.9 3.  2.1]
+ [6.  5.  2.2 1.5]
+ [6.8 5.5 3.  2.1]
+ [7.3 6.3 2.9 1.8]
+ [6.9 5.7 3.2 2.3]
+ [4.9 4.5 2.5 1.7]
+ [6.4 5.6 2.8 2.1]
+ [7.7 6.7 3.8 2.2]
+ [6.3 6.  3.3 2.5]
+ [6.7 5.8 2.5 1.8]
+ [6.5 5.1 3.2 2. ]
+ [7.7 6.7 2.8 2. ]
+ [7.2 6.  3.2 1.8]
+ [6.4 5.3 2.7 1.9]
+ [6.3 5.6 2.9 1.8]
+ [6.7 5.7 3.3 2.1]
+ [6.5 5.5 3.  1.8]
+ [6.4 5.3 3.2 2.3]
+ [5.6 4.9 2.8 2. ]
+ [5.8 5.1 2.8 2.4]
+ [7.2 5.8 3.  1.6]
+ [5.8 5.1 2.7 1.9]
+ [6.1 4.9 3.  1.8]
+ [5.7 5.  2.5 2. ]]
+</code></pre>
+<h2 id="2-데이터-시각화"><a href="#2-데이터-시각화" class="headerlink" title="2. 데이터 시각화"></a>2. 데이터 시각화</h2><hr>
+<ul>
+<li>데이터를 matplotlib.pyplot 라이브러리를 이용항 시각화 합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x_data.shape)</span><br><span class="line"><span class="built_in">print</span>(y_data.shape)</span><br><span class="line">plt.bar(x_data[y_data == <span class="number">0</span>, <span class="number">0</span>], x_data[y_data == <span class="number">0</span>, <span class="number">2</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">plt.bar(x_data[y_data == <span class="number">1</span>, <span class="number">0</span>], x_data[y_data == <span class="number">1</span>, <span class="number">2</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">plt.bar(x_data[y_data == <span class="number">2</span>, <span class="number">0</span>], x_data[y_data == <span class="number">2</span>, <span class="number">2</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">plt.legend(kind)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">plt.bar(x_data[y_data == <span class="number">0</span>, <span class="number">1</span>], x_data[y_data == <span class="number">0</span>, <span class="number">3</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">plt.bar(x_data[y_data == <span class="number">1</span>, <span class="number">1</span>], x_data[y_data == <span class="number">1</span>, <span class="number">3</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">plt.bar(x_data[y_data == <span class="number">2</span>, <span class="number">1</span>], x_data[y_data == <span class="number">2</span>, <span class="number">3</span>], width= <span class="number">0.1</span>, color=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">plt.legend(kind)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>(75, 4)
+(75,)
+</code></pre>
+<p><img src="output_15_1.png" alt="png"></p>
+<p><img src="output_15_2.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(y_data, marker=<span class="string">&#x27;o&#x27;</span>, linestyle=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_16_0.png" alt="png"></p>
+<h2 id="3-데이터-전처리"><a href="#3-데이터-전처리" class="headerlink" title="3. 데이터 전처리"></a>3. 데이터 전처리</h2><hr>
+<ul>
+<li>y 데이터 값을 원-핫 벡터로 코딩합니다.</li>
+<li>학습데이터와 테스트데이터를 분리합니다. <ul>
+<li>sklearn.model_selection에서 제공하는 train_test_split 를 사용합니다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="One-hot-코딩"><a href="#One-hot-코딩" class="headerlink" title="One-hot 코딩"></a><strong>One-hot 코딩</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(kind)</span><br><span class="line"><span class="comment"># x_data</span></span><br><span class="line"><span class="comment"># y_data</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x27;setosa&#x27; = 0</span></span><br><span class="line"><span class="comment"># &#x27;versicolor&#x27; = 1</span></span><br><span class="line"><span class="comment"># &#x27;virginica&#x27; = 2</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[&#39;setosa&#39; &#39;versicolor&#39; &#39;virginica&#39;]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.utils <span class="keyword">import</span> to_categorical</span><br><span class="line">Y_onehot = to_categorical(y_data, num_classes=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">Y_onehot.shape</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>(75, 3)
+</code></pre>
+<h3 id="train-test-split"><a href="#train-test-split" class="headerlink" title="train-test split"></a><strong>train-test split</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x_train, x_test, y_train, y_test = train_test_split(x_data, Y_onehot, test_size=<span class="number">0.2</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x_train.shape)</span><br><span class="line"><span class="built_in">print</span>(y_train.shape)</span><br><span class="line"><span class="built_in">print</span>(x_test.shape)</span><br><span class="line"><span class="built_in">print</span>(y_test.shape)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<pre><code>(60, 4)
+(60, 3)
+(15, 4)
+(15, 3)
+</code></pre>
+<h2 id="4-모델학습"><a href="#4-모델학습" class="headerlink" title="4. 모델학습"></a>4. 모델학습</h2><hr>
+<ul>
+<li>softmax regression을 사용하여 훈련하고, 테스트셋을 이용해 성능을 평가합니다.</li>
+<li>decision tree를 사용하여 훈련하고, 테스트셋을 이용해 성능을 평가합니다.</li>
+<li>이 데이터셋에 적합한 세번째 모델을 찾아보고 훈련해 봅니다.</li>
+</ul>
+<h3 id="Softmax-regression"><a href="#Softmax-regression" class="headerlink" title="Softmax regression"></a><strong>Softmax regression</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> optimizers</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line"></span><br><span class="line">model.add(Dense(<span class="number">3</span>, input_dim = <span class="number">4</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br><span class="line"></span><br><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Model: &quot;sequential_6&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_6 (Dense)              (None, 3)                 15        
+=================================================================
+Total params: 15
+Trainable params: 15
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">W = model.get_weights()[<span class="number">0</span>]</span><br><span class="line">b = model.get_weights()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;W&#x27;</span>, W)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;b&#x27;</span>, b)</span><br></pre></td></tr></table></figure>
+
+<pre><code>W [[-0.34640932  0.649112   -0.27851325]
+ [ 0.44380236 -0.80450916  0.43582928]
+ [ 0.7131357  -0.1360429  -0.01573229]
+ [ 0.630263    0.618158    0.3201201 ]]
+b [0. 0. 0.]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">compile</span>(loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>,</span><br><span class="line">              optimizer=optimizers.SGD(learning_rate=<span class="number">0.01</span>),</span><br><span class="line">              metrics=[<span class="string">&#x27;acc&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history = model.fit(x_train, y_train, epochs=<span class="number">500</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(history.history[<span class="string">&#x27;acc&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&#x27;Accuracy&#x27;</span>)</span><br><span class="line">plt.legend([<span class="string">&#x27;train&#x27;</span>], loc=<span class="string">&#x27;upper left&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">plt.plot(history.history[<span class="string">&#x27;loss&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&#x27;Loss&#x27;</span>)</span><br><span class="line">plt.legend([<span class="string">&#x27;loss&#x27;</span>], loc=<span class="string">&#x27;upper left&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_31_0.png" alt="png"></p>
+<p><img src="output_31_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = model.evaluate(x_test, y_test, verbose=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>WARNING:tensorflow:5 out of the last 5 calls to &lt;function Model.make_test_function.&lt;locals&gt;.test_function at 0x7f1c42c01dd0&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+1/1 [==============================] - 0s 114ms/step - loss: 0.3461 - acc: 1.0000
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;accuracy :&quot;</span>, score[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>accuracy : 1.0
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;loss :&quot;</span>, score[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>loss : 0.3460531234741211
+</code></pre>
+<h3 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a><strong>Decision Tree</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt = tree.DecisionTreeClassifier()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt.fit(x_train, y_train)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion=&#39;gini&#39;,
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort=&#39;deprecated&#39;,
+                       random_state=None, splitter=&#39;best&#39;)
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt.score(x_test, y_test)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>1.0
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree.plot_tree(dt)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>[Text(152.1818181818182, 199.32, &#39;X[3] &lt;= 1.55\ngini = 0.422\nsamples = 60\nvalue = [[49, 11]\n[35, 25]\n[36, 24]]&#39;),
+ Text(60.872727272727275, 163.07999999999998, &#39;X[1] &lt;= 2.5\ngini = 0.312\nsamples = 35\nvalue = [[24, 11]\n[12, 23]\n[34, 1]]&#39;),
+ Text(30.436363636363637, 126.83999999999999, &#39;gini = 0.0\nsamples = 11\nvalue = [[0, 11]\n[11, 0]\n[11, 0]]&#39;),
+ Text(91.30909090909091, 126.83999999999999, &#39;X[1] &lt;= 4.95\ngini = 0.053\nsamples = 24\nvalue = [[24, 0]\n[1, 23]\n[23, 1]]&#39;),
+ Text(60.872727272727275, 90.6, &#39;gini = 0.0\nsamples = 23\nvalue = [[23, 0]\n[0, 23]\n[23, 0]]&#39;),
+ Text(121.74545454545455, 90.6, &#39;gini = 0.0\nsamples = 1\nvalue = [[1, 0]\n[1, 0]\n[0, 1]]&#39;),
+ Text(243.4909090909091, 163.07999999999998, &#39;X[1] &lt;= 5.15\ngini = 0.098\nsamples = 25\nvalue = [[25, 0]\n[23, 2]\n[2, 23]]&#39;),
+ Text(213.05454545454546, 126.83999999999999, &#39;X[2] &lt;= 2.9\ngini = 0.272\nsamples = 7\nvalue = [[7, 0]\n[5, 2]\n[2, 5]]&#39;),
+ Text(182.61818181818182, 90.6, &#39;gini = 0.0\nsamples = 4\nvalue = [[4, 0]\n[4, 0]\n[0, 4]]&#39;),
+ Text(243.4909090909091, 90.6, &#39;X[3] &lt;= 1.75\ngini = 0.296\nsamples = 3\nvalue = [[3, 0]\n[1, 2]\n[2, 1]]&#39;),
+ Text(213.05454545454546, 54.359999999999985, &#39;gini = 0.0\nsamples = 1\nvalue = [[1, 0]\n[0, 1]\n[1, 0]]&#39;),
+ Text(273.92727272727274, 54.359999999999985, &#39;X[0] &lt;= 6.0\ngini = 0.333\nsamples = 2\nvalue = [[2, 0]\n[1, 1]\n[1, 1]]&#39;),
+ Text(243.4909090909091, 18.119999999999976, &#39;gini = 0.0\nsamples = 1\nvalue = [[1, 0]\n[0, 1]\n[1, 0]]&#39;),
+ Text(304.3636363636364, 18.119999999999976, &#39;gini = 0.0\nsamples = 1\nvalue = [[1, 0]\n[1, 0]\n[0, 1]]&#39;),
+ Text(273.92727272727274, 126.83999999999999, &#39;gini = 0.0\nsamples = 18\nvalue = [[18, 0]\n[18, 0]\n[0, 18]]&#39;)]
+</code></pre>
+<p><img src="output_40_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="내가찾은모델"><a href="#내가찾은모델" class="headerlink" title="내가찾은모델"></a><strong>내가찾은모델</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-모델-비교"><a href="#5-모델-비교" class="headerlink" title="5. 모델 비교"></a>5. 모델 비교</h2><hr>
+<ul>
+<li>어떤 모델이 가장 좋은지 간략히 브리핑 합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+</div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="You Ji Hun"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">You Ji Hun</p><p class="is-size-6 is-block">Student</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Daegu</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://github.com/YJiHun/YJH" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">YJH</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li><li><a class="level is-mobile" href="https://github.com/YJiHun/YJH_Project" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">YJH_Project</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/DeepLearning/"><span class="level-start"><span class="level-item">DeepLearning</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/GitHub/"><span class="level-start"><span class="level-item">GitHub</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/GitHub/GitBlog/"><span class="level-start"><span class="level-item">GitBlog</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/MLP/"><span class="level-start"><span class="level-item">MLP</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Threading/"><span class="level-start"><span class="level-item">Threading</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/Fashion_Mnist_dataset/6_Fashion_Mnist_dataset/">Fashion_Minist_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/CIFAR_dataset/6_CIFAR_dataset/">Cifar10_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/Iris_dataset/%EA%B3%BC%EC%A0%9C1_Iris_dataset(%EC%A2%85%EB%A5%98%20%EC%98%88%EC%B8%A1)/">Iris_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T03:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/">딥러닝 공부를 해보자</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-23T05:52:53.000Z">2021-10-23</time></p><p class="title"><a href="/2021/10/23/Thread/Thread/">Threading을 해보자</a></p><p class="categories"><a href="/categories/Threading/">Threading</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">October 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CNN/"><span class="tag">CNN</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cifar10/"><span class="tag">Cifar10</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DNN/"><span class="tag">DNN</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DeepLearning/"><span class="tag">DeepLearning</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Fashion-Minist/"><span class="tag">Fashion_Minist</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitBlog/"><span class="tag">GitBlog</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitHub/"><span class="tag">GitHub</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Iris/"><span class="tag">Iris</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Logistic-Regression/"><span class="tag">Logistic Regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MLP/"><span class="tag">MLP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MNIST/"><span class="tag">MNIST</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Softmax-Regression/"><span class="tag">Softmax Regression</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Threading/"><span class="tag">Threading</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">follow.it</h3><form action="" method="post" target="_blank"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">지훈 블로그</a><p class="is-size-7"><span>&copy; 2021 John Doe</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><!--!--><script src="/js/main.js" defer></script><!--!--></body></html>

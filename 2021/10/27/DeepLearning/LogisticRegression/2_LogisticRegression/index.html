@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>딥러닝 공부를 해보자 - 지훈 블로그</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="지훈 블로그"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="지훈 블로그"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="로지스틱 회귀 ( Logistic Regression ) 목차   개념정리 손실함수 : 크로스 엔트로피 (Cross Entropy) 실습  12345import numpy as npimport matplotlib.pyplot as pltfrom tensorflow.keras.models import Sequentialfrom tensorflow.keras"><meta property="og:type" content="blog"><meta property="og:title" content="딥러닝 공부를 해보자"><meta property="og:url" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/"><meta property="og:site_name" content="지훈 블로그"><meta property="og:description" content="로지스틱 회귀 ( Logistic Regression ) 목차   개념정리 손실함수 : 크로스 엔트로피 (Cross Entropy) 실습  12345import numpy as npimport matplotlib.pyplot as pltfrom tensorflow.keras.models import Sequentialfrom tensorflow.keras"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://colab.research.google.com/assets/colab-badge.svg"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_8_1.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_18_1.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_21_0.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_23_0.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_28_0.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_35_1.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_42_1.png"><meta property="og:image" content="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_52_1.png"><meta property="article:published_time" content="2021-10-27T03:20:00.000Z"><meta property="article:modified_time" content="2021-10-27T08:24:28.000Z"><meta property="article:author" content="John Doe"><meta property="article:tag" content="DeepLearning"><meta property="article:tag" content="Logistic Regression"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://colab.research.google.com/assets/colab-badge.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/"},"headline":"딥러닝 공부를 해보자","image":["https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_8_1.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_18_1.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_21_0.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_23_0.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_28_0.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_35_1.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_42_1.png","https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/output_52_1.png"],"datePublished":"2021-10-27T03:20:00.000Z","dateModified":"2021-10-27T08:24:28.000Z","author":{"@type":"Person","name":"John Doe"},"publisher":{"@type":"Organization","name":"지훈 블로그","logo":{"@type":"ImageObject","url":null}},"description":"로지스틱 회귀 ( Logistic Regression ) 목차   개념정리 손실함수 : 크로스 엔트로피 (Cross Entropy) 실습  12345import numpy as npimport matplotlib.pyplot as pltfrom tensorflow.keras.models import Sequentialfrom tensorflow.keras"}</script><link rel="canonical" href="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">지훈 블로그</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-10-27T03:20:00.000Z" title="2021. 10. 27. 오후 12:20:00">2021-10-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-27T08:24:28.000Z" title="2021. 10. 27. 오후 5:24:28">2021-10-27</time></span><span class="level-item"><a class="link-muted" href="/categories/DeepLearning/">DeepLearning</a></span><span class="level-item">6 minutes read (About 943 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">딥러닝 공부를 해보자</h1><div class="content"><p><a href="https://colab.research.google.com/github/yebiny/Lecture_deeplearning_basic/blob/main/2_LogisticRegression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></p>
+<h1 id="로지스틱-회귀-Logistic-Regression"><a href="#로지스틱-회귀-Logistic-Regression" class="headerlink" title="로지스틱 회귀 ( Logistic Regression )"></a>로지스틱 회귀 ( Logistic Regression )</h1><blockquote>
+<p><strong>목차</strong></p>
+</blockquote>
+<ol>
+<li>개념정리</li>
+<li>손실함수 : 크로스 엔트로피 (Cross Entropy)</li>
+<li>실습</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> optimizers</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-개념정리"><a href="#1-개념정리" class="headerlink" title="1. 개념정리"></a>1. 개념정리</h2><hr>
+<br>
+
+<p>###<center> &lt; 가설 &gt; </center></p>
+<h3 id="f-x-sigma-xW-b"><a href="#f-x-sigma-xW-b" class="headerlink" title="$f(x)=\sigma(xW+b)$"></a><center>$f(x)=\sigma(xW+b)$</center></h3><br>
+
+<h3 id="lt-목적-gt"><a href="#lt-목적-gt" class="headerlink" title=" &lt; 목적 &gt; "></a><center> &lt; 목적 &gt; </center></h3><h3 id="w-b-arg-min-J-y-hat-y"><a href="#w-b-arg-min-J-y-hat-y" class="headerlink" title="$(w^{}, b^{})=arg ; min ;J(y, \hat{y})$"></a><center>$(w^{<em>}, b^{</em>})=arg ; min ;J(y, \hat{y})$</center></h3><h3 id="arg-min-J-y-f-x"><a href="#arg-min-J-y-f-x" class="headerlink" title=" $ =arg ; min ;J(y, f(x))$"></a><center> $ =arg ; min ;J(y, f(x))$</center></h3><h3 id="arg-min-J-y-sigma-xW-b"><a href="#arg-min-J-y-sigma-xW-b" class="headerlink" title=" $ =arg ; min ;J(y, \sigma(xW+b))$"></a><center> $ =arg ; min ;J(y, \sigma(xW+b))$</center></h3><h3 id="시그모이드-함수-Sigmoid-funtion"><a href="#시그모이드-함수-Sigmoid-funtion" class="headerlink" title="시그모이드 함수 ( Sigmoid funtion )"></a><strong>시그모이드 함수 ( Sigmoid funtion )</strong></h3></br>
+
+<h3 id="H-x-frac-1-1-e-x-sigma-x"><a href="#H-x-frac-1-1-e-x-sigma-x" class="headerlink" title="$H(x) = \frac{1}{1+e^{(-x)}} = \sigma(x)$"></a><center>$H(x) = \frac{1}{1+e^{(-x)}} = \sigma(x)$</center></h3><p><strong><center> e(e=2.718281..):</strong>  자연 상수</p>
+<ul>
+<li>구현</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">x</span>):</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>/(<span class="number">1</span>+np.exp(-x))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>시각화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x_arr = np.arange(-<span class="number">5</span>, <span class="number">5</span> , <span class="number">0.1</span>)</span><br><span class="line">y_arr = []</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> x_arr:</span><br><span class="line">  y = sigmoid(x)</span><br><span class="line">  y_arr.append(y)</span><br><span class="line"></span><br><span class="line">y_arr = np.array(y_arr)</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>],linestyle=<span class="string">&#x27;--&#x27;</span>)</span><br><span class="line">plt.plot(x_arr, y_arr)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fd45be78b10&gt;]
+</code></pre>
+<p><img src="output_8_1.png" alt="png"></p>
+<h3 id="가설-구현"><a href="#가설-구현" class="headerlink" title="가설 구현"></a><strong>가설 구현</strong></h3><p>###<center>$f(x)=\sigma(xW+b)$</center></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hypothesis</span>(<span class="params">x, W, b=<span class="number">0</span></span>):</span></span><br><span class="line">  <span class="keyword">return</span> sigmoid(np.dot(x,W)+b)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="예제"><a href="#예제" class="headerlink" title="예제"></a><strong>예제</strong></h3><table>
+<thead>
+<tr>
+<th>라운드점수(X)</th>
+<th>종합점수</th>
+<th>결과(Y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-3</td>
+<td>1</td>
+<td>패배</td>
+</tr>
+<tr>
+<td>-2</td>
+<td>1</td>
+<td>패배</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>2</td>
+<td>패배</td>
+</tr>
+<tr>
+<td>0</td>
+<td>3</td>
+<td>패배</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>승리</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+<td>승리</td>
+</tr>
+<tr>
+<td>3</td>
+<td>9</td>
+<td>승리</td>
+</tr>
+</tbody></table>
+<ul>
+<li>데이터 정의</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">X = np.arange(-<span class="number">3</span>,<span class="number">4</span>,<span class="number">1</span>).reshape(-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">Y = np.array([[<span class="number">0</span>],</span><br><span class="line">              [<span class="number">0</span>],</span><br><span class="line">              [<span class="number">0</span>],</span><br><span class="line">              [<span class="number">0</span>],</span><br><span class="line">              [<span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>]])</span><br><span class="line">X[<span class="number">0</span>].shape, Y[<span class="number">0</span>].shape</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>((1,), (1,))
+</code></pre>
+<ul>
+<li>예측</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">W = np.array([[<span class="number">1</span>]])</span><br><span class="line">W.shape</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> X:</span><br><span class="line">  y_pred = hypothesis(x[<span class="number">0</span>], W)</span><br><span class="line">  <span class="built_in">print</span>(y_pred)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[0.04742587]]
+[[0.11920292]]
+[[0.26894142]]
+[[0.5]]
+[[0.73105858]]
+[[0.88079708]]
+[[0.95257413]]
+</code></pre>
+<ul>
+<li>시각화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(X, Y, marker=<span class="string">&#x27;o&#x27;</span>, linestyle=<span class="string">&#x27;&#x27;</span>, color=<span class="string">&#x27;k&#x27;</span>)</span><br><span class="line">plt.plot(X, [hypothesis(x,W) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fd45c03a4d0&gt;]
+</code></pre>
+<p><img src="output_18_1.png" alt="png"></p>
+<h3 id="학습-파라미터"><a href="#학습-파라미터" class="headerlink" title="학습 파라미터"></a><strong>학습 파라미터</strong></h3><ul>
+<li>W 값에 따른 함수의 변화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(X, Y, marker=<span class="string">&#x27;o&#x27;</span>, linestyle=<span class="string">&#x27;&#x27;</span>, color=<span class="string">&#x27;k&#x27;</span>)</span><br><span class="line">W = np.array([[<span class="number">0.5</span>]])</span><br><span class="line">plt.plot(X, [hypothesis(x,W) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">W = np.array([[<span class="number">1</span>]])</span><br><span class="line">plt.plot(X, [hypothesis(x,W) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">W = np.array([[<span class="number">2</span>]])</span><br><span class="line">plt.plot(X, [hypothesis(x,W) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.legend([<span class="string">&#x27;data&#x27;</span>,<span class="string">&#x27;w=0.5&#x27;</span>,<span class="string">&#x27;w=1.0&#x27;</span>,<span class="string">&#x27;w=2.0&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_21_0.png" alt="png"></p>
+<ul>
+<li>b값에 따른 함수의 변화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(X, Y, marker=<span class="string">&#x27;o&#x27;</span>, linestyle=<span class="string">&#x27;&#x27;</span>, color=<span class="string">&#x27;k&#x27;</span>)</span><br><span class="line">W = np.array([[<span class="number">2</span>]])</span><br><span class="line"></span><br><span class="line">b = -<span class="number">1</span></span><br><span class="line">plt.plot(X, [hypothesis(x,W,b) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;r&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">b = <span class="number">0</span></span><br><span class="line">plt.plot(X, [hypothesis(x,W,b) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;g&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">b = <span class="number">1</span></span><br><span class="line">plt.plot(X, [hypothesis(x,W,b) <span class="keyword">for</span> x <span class="keyword">in</span> X], color=<span class="string">&#x27;b&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.legend([<span class="string">&#x27;data&#x27;</span>,<span class="string">&#x27;b=-1&#x27;</span>,<span class="string">&#x27;b=0&#x27;</span>,<span class="string">&#x27;b=1&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_23_0.png" alt="png"></p>
+<h2 id="2-손실함수-크로스-엔트로피-Cross-Entropy"><a href="#2-손실함수-크로스-엔트로피-Cross-Entropy" class="headerlink" title="2. 손실함수: 크로스 엔트로피 (Cross Entropy)"></a>2. 손실함수: 크로스 엔트로피 (Cross Entropy)</h2><hr>
+</br>
+
+<h2 id="J-W-frac-1-n-sum-i-1-n-y-i-log-hat-y-i-1-y-i-log-1-hat-y-i"><a href="#J-W-frac-1-n-sum-i-1-n-y-i-log-hat-y-i-1-y-i-log-1-hat-y-i" class="headerlink" title="$J(W) = -\frac{1}{n}\sum_{i=1}^{n}[y^{(i)}log(\hat{y}^{(i)})+(1-y^{(i)})log(1-\hat{y}^{(i)})]$"></a><center>$J(W) = -\frac{1}{n}\sum_{i=1}^{n}[y^{(i)}log(\hat{y}^{(i)})+(1-y^{(i)})log(1-\hat{y}^{(i)})]$</center></h2></br>
+
+<center> $y = 1 \rightarrow cost(y, \hat{y}) = -log(\hat{y})$</center>
+<center> $y = 0 \rightarrow cost(y, \hat{y}) = -log(1-\hat{y})$</center>
+
+
+<ul>
+<li>구현</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">J</span>(<span class="params">y, y_pred</span>):</span></span><br><span class="line">  <span class="keyword">if</span> y == <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">return</span> -(np.log10(y_pred))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">elif</span> y == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> -(np.log10(<span class="number">1</span>-y_pred))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>시각화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">y_pred_arr = np.arange(<span class="number">0.1</span>, <span class="number">1</span>, <span class="number">0.1</span>)</span><br><span class="line"><span class="keyword">for</span> y_pred <span class="keyword">in</span> y_pred_arr:</span><br><span class="line">  plt.plot(y_pred, J(<span class="number">1</span>, y_pred), marker=<span class="string">&#x27;o&#x27;</span>, color=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">  plt.plot(y_pred, J(<span class="number">0</span>, y_pred), marker=<span class="string">&#x27;o&#x27;</span>, color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.legend([<span class="string">&#x27;y = 1&#x27;</span>, <span class="string">&#x27;y = 0&#x27;</span>])</span><br><span class="line">plt.xlabel(<span class="string">&#x27;y_pred&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Loss = J(y, y_pred)&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_28_0.png" alt="png"></p>
+<h2 id="3-실습"><a href="#3-실습" class="headerlink" title="3. 실습"></a>3. 실습</h2><hr>
+<h3 id="데이터"><a href="#데이터" class="headerlink" title="데이터"></a><strong>데이터</strong></h3><table>
+<thead>
+<tr>
+<th>공부시간</th>
+<th>집중도</th>
+<th>수면시간</th>
+<th>종합성적</th>
+<th>합격여부</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>0</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>8.5</td>
+<td>1.1</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>8</td>
+<td>2.3</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>8</td>
+<td>3.0</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>7</td>
+<td>4.4</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>7.5</td>
+<td>5.5</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>6.1</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>7</td>
+<td>6</td>
+<td>6</td>
+<td>7.3</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>8</td>
+<td>7</td>
+<td>7</td>
+<td>8.4</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>9</td>
+<td>6</td>
+<td>6.5</td>
+<td>9.8</td>
+<td>합격</td>
+</tr>
+</tbody></table>
+<ul>
+<li>데이터 정의</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">X = np.array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">1</span>, <span class="number">8.5</span>, <span class="number">1.1</span>],</span><br><span class="line">              [<span class="number">2</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">2.3</span>],</span><br><span class="line">              [<span class="number">3</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">3.0</span>],</span><br><span class="line">              [<span class="number">4</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4.4</span>],</span><br><span class="line">              [<span class="number">5</span>, <span class="number">5</span>, <span class="number">7.5</span>, <span class="number">5.5</span>],</span><br><span class="line">              [<span class="number">6</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">6.1</span>],</span><br><span class="line">              [<span class="number">7</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">7.3</span>],</span><br><span class="line">              [<span class="number">8</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">8.4</span>],</span><br><span class="line">              [<span class="number">9</span>, <span class="number">6</span>, <span class="number">6.5</span>, <span class="number">9.8</span>]])</span><br><span class="line">Y = np.array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>시각화 </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(Y, linestyle=<span class="string">&#x27;--&#x27;</span>, marker=<span class="string">&#x27;o&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fd46055cad0&gt;]
+</code></pre>
+<p><img src="output_35_1.png" alt="png"></p>
+<h3 id="모델-생성"><a href="#모델-생성" class="headerlink" title="모델 생성"></a><strong>모델 생성</strong></h3><ul>
+<li>케라스를 이용한 모델 구현</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line">model.add(Dense(<span class="number">1</span>, input_dim=<span class="number">4</span>, activation=<span class="string">&#x27;sigmoid&#x27;</span>))</span><br><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Model: &quot;sequential_9&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_8 (Dense)              (None, 1)                 5         
+=================================================================
+Total params: 5
+Trainable params: 5
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre>
+<ul>
+<li>학습 파라미터 확인</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">W = model.get_weights()[<span class="number">0</span>]</span><br><span class="line">b = model.get_weights()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;W:&#x27;</span>,W,<span class="string">&#x27;b:&#x27;</span>,b)</span><br></pre></td></tr></table></figure>
+
+<pre><code>W: [[ 0.6756476 ]
+ [-0.5556424 ]
+ [-0.47744548]
+ [ 0.00187528]] b: [0.]
+</code></pre>
+<ul>
+<li>시각화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Y_pred = model.predict(X)</span><br><span class="line"><span class="built_in">print</span>(Y.shape, Y_pred.shape)</span><br><span class="line"></span><br><span class="line">plt.plot(Y, linestyle=<span class="string">&#x27;--&#x27;</span>, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.plot(Y_pred, linestyle=<span class="string">&#x27;--&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>WARNING:tensorflow:5 out of the last 9 calls to &lt;function Model.make_predict_function.&lt;locals&gt;.predict_function at 0x7fd4582275f0&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+(10,) (10, 1)
+</code></pre>
+<p><img src="output_42_1.png" alt="png"></p>
+<h3 id="모델-학습"><a href="#모델-학습" class="headerlink" title="모델 학습"></a><strong>모델 학습</strong></h3><ul>
+<li>모델 컴파일</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">compile</span>(optimizer=optimizers.SGD(learning_rate=<span class="number">0.01</span>),</span><br><span class="line">              loss=<span class="string">&#x27;binary_crossentropy&#x27;</span>,</span><br><span class="line">              metrics=[<span class="string">&#x27;acc&#x27;</span>]</span><br><span class="line">              )</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>학습 진행</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(X, Y, epochs=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>1/1 [==============================] - 0s 4ms/step - loss: 0.1359 - acc: 1.0000
+
+
+
+
+
+&lt;keras.callbacks.History at 0x7fd460462450&gt;
+</code></pre>
+<h3 id="결과"><a href="#결과" class="headerlink" title="결과"></a><strong>결과</strong></h3><ul>
+<li>학습 파라미터 확인</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">W = model.get_weights()[<span class="number">0</span>]</span><br><span class="line">b = model.get_weights()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;W:&#x27;</span>,W,<span class="string">&#x27;b:&#x27;</span>,b)</span><br></pre></td></tr></table></figure>
+
+<pre><code>W: [[ 1.0008601 ]
+ [-0.14521359]
+ [-0.7228296 ]
+ [ 0.33016428]] b: [-0.03003764]
+</code></pre>
+<ul>
+<li>시각화</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Y_pred = model.predict(X)</span><br><span class="line"><span class="built_in">print</span>(Y.shape, Y_pred.shape)</span><br><span class="line"></span><br><span class="line">plt.plot(Y, linestyle=<span class="string">&#x27;--&#x27;</span>, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.plot(Y_pred, linestyle=<span class="string">&#x27;--&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>(10,) (10, 1)
+</code></pre>
+<p><img src="output_52_1.png" alt="png"></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>딥러닝 공부를 해보자</p><p><a href="https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/">https://yjihun.github.io/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>John Doe</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-10-27</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-10-27</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/DeepLearning/">DeepLearning</a><a class="link-muted mr-2" rel="tag" href="/tags/Logistic-Regression/">Logistic Regression</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/10/27/DeepLearning/Iris_dataset/%EA%B3%BC%EC%A0%9C1_Iris_dataset(%EC%A2%85%EB%A5%98%20%EC%98%88%EC%B8%A1)/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Iris_dataset을 이용하여 딥러닝 공부</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/10/23/Thread/Thread/"><span class="level-item">Threading을 해보자</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="You Ji Hun"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">You Ji Hun</p><p class="is-size-6 is-block">Student</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Daegu</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://github.com/YJiHun/YJH" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">YJH</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li><li><a class="level is-mobile" href="https://github.com/YJiHun/YJH_Project" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">YJH_Project</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/DeepLearning/"><span class="level-start"><span class="level-item">DeepLearning</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/GitHub/"><span class="level-start"><span class="level-item">GitHub</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/GitHub/GitBlog/"><span class="level-start"><span class="level-item">GitBlog</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/MLP/"><span class="level-start"><span class="level-item">MLP</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Threading/"><span class="level-start"><span class="level-item">Threading</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/Fashion_Mnist_dataset/6_Fashion_Mnist_dataset/">Fashion_Minist_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/CIFAR_dataset/6_CIFAR_dataset/">Cifar10_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T08:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/Iris_dataset/%EA%B3%BC%EC%A0%9C1_Iris_dataset(%EC%A2%85%EB%A5%98%20%EC%98%88%EC%B8%A1)/">Iris_dataset을 이용하여 딥러닝 공부</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-27T03:20:00.000Z">2021-10-27</time></p><p class="title"><a href="/2021/10/27/DeepLearning/LogisticRegression/2_LogisticRegression/">딥러닝 공부를 해보자</a></p><p class="categories"><a href="/categories/DeepLearning/">DeepLearning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-23T05:52:53.000Z">2021-10-23</time></p><p class="title"><a href="/2021/10/23/Thread/Thread/">Threading을 해보자</a></p><p class="categories"><a href="/categories/Threading/">Threading</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">October 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CNN/"><span class="tag">CNN</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cifar10/"><span class="tag">Cifar10</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DNN/"><span class="tag">DNN</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DeepLearning/"><span class="tag">DeepLearning</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Fashion-Minist/"><span class="tag">Fashion_Minist</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitBlog/"><span class="tag">GitBlog</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitHub/"><span class="tag">GitHub</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Iris/"><span class="tag">Iris</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Logistic-Regression/"><span class="tag">Logistic Regression</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MLP/"><span class="tag">MLP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MNIST/"><span class="tag">MNIST</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Softmax-Regression/"><span class="tag">Softmax Regression</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Threading/"><span class="tag">Threading</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">follow.it</h3><form action="" method="post" target="_blank"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">지훈 블로그</a><p class="is-size-7"><span>&copy; 2021 John Doe</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/YJiHun"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><!--!--><script src="/js/main.js" defer></script><!--!--></body></html>
